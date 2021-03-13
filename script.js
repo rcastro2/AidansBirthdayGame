@@ -2,12 +2,13 @@ let scene,msg;
 let rnd = (l,u) => Math.floor(Math.random()*(u-l)+l);
 let $ = (el) => document.getElementById(el);
 
-let balloons = [], cupcakes = [], cakes, threshold = 7;
+let balloons = [], cupcakes = [], cakes, threshold = 7, soundFlag = false;
 let gifts = [];
 let count = 0, count2 = 0, count3 = 0;
 let point,cheering,choochoo,blop;
 window.onload = ()=>{
   scene = $("scene");
+  scene.addEventListener("click",()=>{soundFlag = true; alert(3)})
   msg = $("msg")
   cakes = [$("cake"),$("cake2")]
 
@@ -25,18 +26,14 @@ window.onload = ()=>{
   }
   loop();
 }
-window.onclick = ()=>{
-  alert(1)
-  choochoo.play();
-}
+
 function loop(){
-  if(choochoo.readyState){ 
-    choochoo.play();
-  }
+  if(soundFlag) choochoo.play();
+  
   
   if(count == threshold){
     msg.setAttribute("value","");
-    cheering.play();
+    if(soundFlag) cheering.play();
     $("instructions").setAttribute("visible",false);
     $("status").setAttribute("visible",false);
     $("instructions2").setAttribute("visible",true);
@@ -54,7 +51,7 @@ function loop(){
     count++;
   }
   if(count2 == threshold){
-    cheering.play();
+    if(soundFlag) cheering.play();
     $("instructions2").setAttribute("visible",false);
     $("status2").setAttribute("visible",false);
     $("instructions3").setAttribute("visible",true);
@@ -85,7 +82,7 @@ function loop(){
     }
   }
   if(count3 == 3){
-    cheering.play();
+    if(soundFlag) cheering.play();
     $("instructions3").setAttribute("visible",false);
     $("sign").setAttribute("visible",true);
     $("name").setAttribute("visible",true);
@@ -126,7 +123,7 @@ class Balloon extends Entity{
         this.obj.setAttribute("visible",false);
         $("status3").object3D.position.x = -count3 * 0.5
         new Entity("balloon",count3 * 1,0,0,0.01,$("status3"));
-        blop.play();
+        if(soundFlag) blop.play();
         count3++;
       }
     })
@@ -144,7 +141,7 @@ class Cupcakes extends Entity{
         this.obj.setAttribute("visible",false);
         $("status2").object3D.position.x = -count2 * 0.5
         new Entity("cupcake",count2 * 1.5,0,0,1,$("status2"));
-        blop.play();
+        if(soundFlag) blop.play();
         count2++;
       }
     })
@@ -168,7 +165,7 @@ class Gift extends Entity{
     this.obj.addEventListener("mouseenter",()=>{
       if(this.obj.getAttribute("visible")){
         this.obj.setAttribute("visible",false);  
-        point.play();
+        if(soundFlag) point.play();
         $("status").object3D.position.x = -count * 1.25
         new Entity(this.model,count * 1.75,0,0,0.4,$("status"));
         count++;
