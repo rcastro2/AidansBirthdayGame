@@ -11,10 +11,6 @@ window.onload = ()=>{
   msg = $("msg")
   cakes = [$("cake"),$("cake2")]
 
-  //point = new Audio("point.ogg");
-  //cheering = new Audio("cheering.mp3");
-  //blop = new Audio("blop.mp3");
-  //choochoo = new Audio("choochoo.mp3");
   point = $("point")
   cheering = $("cheering")
   blop = $("blop")
@@ -29,7 +25,10 @@ window.onload = ()=>{
   }
   loop();
 }
-
+window.onclick = ()=>{
+  alert(1)
+  choochoo.play();
+}
 function loop(){
   if(choochoo.readyState){ 
     choochoo.play();
